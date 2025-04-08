@@ -68,7 +68,7 @@ export default function Home() {
         </div>
 
         <div className="w-full space-y-3">
-          <Link href="/relationship-book1" className="block">
+          <Link href="/relationship-book" className="block">
             <div className="flex items-center justify-between bg-pink-200 hover:bg-pink-300 transition-colors rounded-xl p-4 text-left">
               <div className="flex items-center">
                 <Book className="h-5 w-5 text-pink-600 mr-2" />
@@ -81,7 +81,7 @@ export default function Home() {
             </div>
           </Link>
 
-          <Link href="/gallery1" className="block">
+          <Link href="/" className="block">
             <div className="flex items-center justify-between bg-blue-100 hover:bg-blue-200 transition-colors rounded-xl p-4 text-left">
               <div className="flex items-center">
                 <ImageIcon className="h-5 w-5 text-blue-600 mr-2" />
@@ -94,7 +94,7 @@ export default function Home() {
             </div>
           </Link>
 
-          <Link href="/video-diary1" className="block">
+          <Link href="/" className="block">
             <div className="flex items-center justify-between bg-purple-100 hover:bg-purple-200 transition-colors rounded-xl p-4 text-left">
               <div className="flex items-center">
                 <Video className="h-5 w-5 text-purple-600 mr-2" />
