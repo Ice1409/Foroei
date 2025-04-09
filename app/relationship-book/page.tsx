@@ -17,29 +17,14 @@ const bookPages = [
     type: "toc",
     title: "สารบัญ",
     items: [
-      { title: "รักแฟน", page: 2 },
-      { title: "คิดถึงแฟน", page: 3 },
+      { title: "แฟน", page: 2 },
+      { title: "แฟนๆ", page: 3 },
+
     ],
   },
   {
     type: "content",
-    title: "แฟนตัวใย่",
-    date: "22 กุมภาพันธ์ 2568",
-    images: [
-      {
-        src: "/placeholder.svg?height=600&width=800",
-        caption: "แฟน",
-      },
-      {
-        src: "/placeholder.svg?height=600&width=800",
-        caption: "แฟนอีก",
-      },
-    ],
-    text: "รักแฟนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนน",
-  },
-  {
-    type: "content",
-    title: "แฟนตัวใย่",
+    title: "แฟน",
     date: "22 กุมภาพันธ์ 2568",
     images: [
       {
@@ -50,17 +35,33 @@ const bookPages = [
         src: "/placeholder.svg?height=600&width=800",
         caption: "แฟน",
       },
+    ],
+    text: "แฟนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนน นนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนน นนนนนนนนนนนนนนนนนนนนนนนนนนนนนนน นนนนนนนนนนนนนนนนนนนนน",
+  },
+  {
+    type: "content",
+    title: "แฟน",
+    date: "22 กุมภาพันธ์ 2568",
+    images: [
       {
         src: "/placeholder.svg?height=600&width=800",
-        caption: "ละก้แฟน",
+        caption: "แฟน",
+      },
+      {
+        src: "/placeholder.svg?height=600&width=800",
+        caption: "เแฟน",
+      },
+      {
+        src: "/placeholder.svg?height=600&width=800",
+        caption: "แฟน",
       },
     ],
-    text: "รักแฟนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนน",
+    text: "แฟนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนน นนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนนน",
   },
   {
     type: "last",
     title: "The End",
-    text: "Ice & Oei",
+    text: "Ice & Oei ...",
   },
 ]
 
@@ -218,7 +219,7 @@ export default function RelationshipBook() {
                   <div className="toc-page">
                     <h2 className="page-title">{bookPages[1].title}</h2>
                     <ul className="toc-list">
-                    {bookPages[1]?.items?.map((item, index) => (
+                      {bookPages[1]?.items?.map((item, index) => (
                         <li key={index} className="toc-item">
                           <span className="toc-title">{item.title}</span>
                           <div className="toc-dots"></div>
@@ -292,10 +293,7 @@ export default function RelationshipBook() {
                       )}
                     </div>
 
-                    {/* Text content with proper overflow handling */}
-                    <div className="page-text-container max-h-48 overflow-y-auto">
-                      <p className="page-text break-words">{bookPages[currentPage].text}</p>
-                    </div>
+                    <p className="page-text">{bookPages[currentPage].text}</p>
 
                     <div className="page-number">{currentPage}</div>
                   </div>
@@ -332,7 +330,7 @@ export default function RelationshipBook() {
         </div>
 
         {/* Page indicators */}
-        <div className="page-indicators">
+        <div className="page-indicators mb-10">
           {bookPages.map((_, index) => (
             <button
               key={index}
@@ -343,6 +341,10 @@ export default function RelationshipBook() {
           ))}
         </div>
       </div>
+      <footer className="text-center text-gray-500 text-sm mb-4">
+        <p>Made with ❤️ for our story</p>
+        <p className="mt-1">© {new Date().getFullYear()} From ICE</p>
+      </footer>
     </div>
   )
 }
