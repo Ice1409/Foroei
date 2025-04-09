@@ -132,6 +132,19 @@ export default function Home() {
               <Heart className="h-4 w-4 text-pink-500" />
             </div>
           </Link>
+
+          <Link href="/1m" className="block">
+            <div className="flex items-center justify-between bg-purple-50 hover:bg-purple-100 transition-colors rounded-xl p-4 text-left mb-10">
+              <div className="flex items-center">
+                <Gift className="h-5 w-5 text-purple-600 mr-2" />
+                <div>
+                  <div className="font-medium text-purple-500">1 Month</div>
+                  <div className="text-xs text-purple-400">1 เดือน</div>
+                </div>
+              </div>
+              <Heart className="h-4 w-4 text-purple-500" />
+            </div>
+          </Link>
         </div>
       </div>
       <footer className="text-center text-gray-500 text-sm mb-4">
