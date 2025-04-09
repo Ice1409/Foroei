@@ -1,4 +1,5 @@
-import { initializeApp, cert } from "firebase-admin/app"
+// แก้ไขการเชื่อมต่อกับ Firebase Admin SDK ให้มีความเสถียรมากขึ้น
+import { initializeApp, getApps, cert } from "firebase-admin/app"
 import { getFirestore } from "firebase-admin/firestore"
 
 // Service account credentials
@@ -19,24 +20,23 @@ const serviceAccount = {
 }
 
 // Initialize Firebase Admin SDK
-let app
 let db
 
 try {
-  // Check if the app has already been initialized
-  app = initializeApp(
-    {
+  // Check if Firebase Admin has already been initialized
+  const apps = getApps()
+
+  if (!apps.length) {
+    // Initialize the app if it hasn't been initialized yet
+    initializeApp({
       credential: cert(serviceAccount as any),
       databaseURL: `https://${serviceAccount.project_id}.firebaseio.com`,
-    },
-    "iceoei-admin",
-  )
+    })
+  }
 
-  db = getFirestore(app)
+  db = getFirestore()
 } catch (error) {
-  // If the app is already initialized, get the existing app
   console.error("Firebase admin initialization error:", error)
 }
 
 export { db }
-

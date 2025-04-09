@@ -114,7 +114,7 @@ const videos = [
     id: 12,
     thumbnail: "/placeholder.svg?height=600&width=800",
     videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", // Sample video URL
-    title: "ไปดูพระอาทิตย์ตกด้วยกัน",
+    title: "ไปดูพระอาทิตย์ตก��้วยกัน",
     date: "17 กันยายน 2568",
     duration: "1:48",
   },
@@ -477,14 +477,7 @@ export default function VideoDiary() {
             </Button>
           </div>
         )}
-
-        <footer className="text-center text-gray-500 text-sm mb-4">
-        <p>Made with ❤️ for our story</p>
-        <p className="mt-1">© {new Date().getFullYear()} From ICE</p>
-        </footer>
       </div>
     </div>
-    
   )
 }
-

@@ -292,7 +292,10 @@ export default function RelationshipBook() {
                       )}
                     </div>
 
-                    <p className="page-text">{bookPages[currentPage].text}</p>
+                    {/* Text content with proper overflow handling */}
+                    <div className="page-text-container max-h-48 overflow-y-auto">
+                      <p className="page-text break-words">{bookPages[currentPage].text}</p>
+                    </div>
 
                     <div className="page-number">{currentPage}</div>
                   </div>

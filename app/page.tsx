@@ -81,7 +81,7 @@ export default function Home() {
             </div>
           </Link>
 
-          <Link href="/" className="block">
+          <Link href="/1" className="block">
             <div className="flex items-center justify-between bg-blue-100 hover:bg-blue-200 transition-colors rounded-xl p-4 text-left">
               <div className="flex items-center">
                 <ImageIcon className="h-5 w-5 text-blue-600 mr-2" />
@@ -94,7 +94,7 @@ export default function Home() {
             </div>
           </Link>
 
-          <Link href="/" className="block">
+          <Link href="/2" className="block">
             <div className="flex items-center justify-between bg-purple-100 hover:bg-purple-200 transition-colors rounded-xl p-4 text-left">
               <div className="flex items-center">
                 <Video className="h-5 w-5 text-purple-600 mr-2" />
