@@ -9,8 +9,6 @@ import {
   addMonths,
   addYears,
   differenceInDays,
-  differenceInMonths,
-  differenceInYears,
   isSameDay,
   isAfter,
   startOfMonth,
@@ -20,13 +18,40 @@ import {
   isSameMonth,
 } from "date-fns"
 import { th } from "date-fns/locale"
-import { Home, ChevronLeft, ChevronRight, Heart, Gift, Calendar, Cake, Music, Camera, Plus, Star, Sparkles, Plane, Utensils, Film, Smile, Zap, Award, Loader2, X } from 'lucide-react'
+import {
+  Home,
+  ChevronLeft,
+  ChevronRight,
+  Heart,
+  Gift,
+  Calendar,
+  Cake,
+  Music,
+  Camera,
+  Plus,
+  Star,
+  Sparkles,
+  Plane,
+  Utensils,
+  Film,
+  Smile,
+  Zap,
+  Award,
+  Loader2,
+} from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Calendar as CalendarComponent } from "@/components/ui/calendar"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from "@/components/ui/dialog"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogClose,
+} from "@/components/ui/dialog"
 import { initializeApp } from "firebase/app"
 import {
   getFirestore,
@@ -38,6 +63,9 @@ import {
   onSnapshot,
   type Timestamp,
 } from "firebase/firestore"
+
+// Replace the relationship duration calculation with the standardized version
+import { calculateTimeTogether } from "@/lib/utils"
 
 // Firebase configuration
 const firebaseConfig = {
@@ -130,7 +158,6 @@ const generateSpecialDates = () => {
   }
 
   // Add other special dates
-
 
   return dates
 }
@@ -296,7 +323,7 @@ export default function SpecialDates() {
   const [customDates, setCustomDates] = useState<CustomDate[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
-  
+
   // State for selected date and dialog
   const [selectedDay, setSelectedDay] = useState<Date | null>(null)
   const [selectedDayEvents, setSelectedDayEvents] = useState<CustomDate[]>([])
@@ -308,6 +335,13 @@ export default function SpecialDates() {
   const [selectedIcon, setSelectedIcon] = useState(availableIcons[0].name)
   const [selectedColor, setSelectedColor] = useState(availableColors[0].name)
   const [formError, setFormError] = useState("")
+
+  // Relationship duration state
+  const [timeTogether, setTimeTogether] = useState({
+    years: 0,
+    months: 0,
+    days: 0,
+  })
 
   // Fetch custom dates from Firestore
   useEffect(() => {
@@ -383,6 +417,15 @@ export default function SpecialDates() {
 
     return () => clearInterval(timer)
   }, [nextSpecialDate])
+
+  // Replace the existing calculateTimeTogether function in the useEffect with:
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimeTogether(calculateTimeTogether(startDate))
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [])
 
   // Function to get the next special date
   const getNextSpecialDate = (dates: CustomDate[]) => {
@@ -475,12 +518,6 @@ export default function SpecialDates() {
   const allDates = [...specialDates, ...customDates]
   const currentMonthSpecialDates = allDates.filter((specialDate) => isSameMonth(specialDate.date, currentMonth))
 
-  // Calculate relationship duration
-  const today = new Date()
-  const years = differenceInYears(today, startDate)
-  const months = differenceInMonths(today, startDate) % 12
-  const days_passed = differenceInDays(today, addMonths(addYears(startDate, years), months))
-
   // Format date in Thai
   const formatThaiDate = (date: Date) => {
     return format(date, "d MMMM yyyy", { locale: th })
@@ -549,17 +586,17 @@ export default function SpecialDates() {
 
           <div className="flex justify-center items-center gap-4">
             <div className="text-center">
-              <div className="text-3xl font-bold text-pink-600">{years}</div>
+              <div className="text-3xl font-bold text-pink-600">{timeTogether.years}</div>
               <div className="text-sm text-pink-500">Years</div>
             </div>
             <div className="text-pink-300 text-2xl">•</div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-pink-600">{months}</div>
+              <div className="text-3xl font-bold text-pink-600">{timeTogether.months}</div>
               <div className="text-sm text-pink-500">Months</div>
             </div>
             <div className="text-pink-300 text-2xl">•</div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-pink-600">{days_passed}</div>
+              <div className="text-3xl font-bold text-pink-600">{timeTogether.days}</div>
               <div className="text-sm text-pink-500">Days</div>
             </div>
           </div>
@@ -825,7 +862,7 @@ export default function SpecialDates() {
           </form>
         </div>
       </div>
-      
+
       {/* Special Date Detail Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="sm:max-w-md">
@@ -833,14 +870,12 @@ export default function SpecialDates() {
             <DialogTitle className="text-center text-xl text-pink-600">
               {selectedDay && formatThaiDate(selectedDay)}
             </DialogTitle>
-            <DialogDescription className="text-center">
-              วันสำคัญในวันนี้
-            </DialogDescription>
+            <DialogDescription className="text-center">วันสำคัญในวันนี้</DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
             {selectedDayEvents.map((event, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className={`p-4 rounded-lg ${event.color} border animate-fadeIn transition-all duration-300`}
               >
                 <div className="flex items-center gap-3">
@@ -852,15 +887,9 @@ export default function SpecialDates() {
                     <p className="text-sm opacity-80">{formatThaiDate(event.date)}</p>
                   </div>
                 </div>
-                {event.type === "monthly" && (
-                  <p className="mt-3 text-sm">
-                    ครบรอบกี่เดือนเนี่ยย ขอให้อยู่รักกันไปเรื่อยๆ เลยนะะ ❤️
-                  </p>
-                )}
+                {event.type === "monthly" && <p className="mt-3 text-sm">ครบรอบกี่เดือนเนี่ยย ขอให้อยู่รักกันไปเรื่อยๆ เลยนะะ ❤️</p>}
                 {event.type === "yearly" && (
-                  <p className="mt-3 text-sm">
-                    ครบรอบรายปีหวะ ขอบคุณที่อยู่รักกันมาตลอดนะ เค้าดีใจนะตลอดเวลาที่มีแฟนเลย 💝
-                  </p>
+                  <p className="mt-3 text-sm">ครบรอบรายปีหวะ ขอบคุณที่อยู่รักกันมาตลอดนะ เค้าดีใจนะตลอดเวลาที่มีแฟนเลย 💝</p>
                 )}
               </div>
             ))}
@@ -874,7 +903,7 @@ export default function SpecialDates() {
           </div>
         </DialogContent>
       </Dialog>
-      
+
       <footer className="text-center text-gray-500 text-sm mb-4">
         <p>Made with ❤️ for our story</p>
         <p className="mt-1">© {new Date().getFullYear()} From ICE</p>

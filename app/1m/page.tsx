@@ -52,7 +52,7 @@ export default function Home() {
       };
   
       calculateTimeTogether();
-      const interval = setInterval(calculateTimeTogether, 1000); // อัปเดตทุกวินาที
+      const interval = setInterval(calculateTimeTogether, 1000); // อัปเดตทุกวินาทีs
   
       return () => clearInterval(interval);
     }, []);

@@ -15,7 +15,7 @@ export default function Home() {
     seconds: 0,
   })
 
-  // Anniversary date: February 22, 2025 at 23:32
+  // Anniversary date: February 22, 2025 at 23:32 
   const anniversaryDate = new Date("2025-02-22T23:32:00")
 
   useEffect(() => {
@@ -81,7 +81,7 @@ export default function Home() {
             </div>
           </Link>
 
-          <Link href="/1" className="block">
+          <Link href="/gallery" className="block">
             <div className="flex items-center justify-between bg-blue-100 hover:bg-blue-200 transition-colors rounded-xl p-4 text-left">
               <div className="flex items-center">
                 <ImageIcon className="h-5 w-5 text-blue-600 mr-2" />
